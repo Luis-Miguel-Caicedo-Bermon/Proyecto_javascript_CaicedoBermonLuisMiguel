@@ -369,9 +369,9 @@ while (bool==true){
         console.log("");
         console.log("MODULO DE COORDINACION ACADEMICA");
         console.log("");
-        menucoordinador();
         var ver=true;
         while (ver==true){
+            menucoordinador();
             var opc1=prompt("ingrese su opcion por favor: ");
             if (opc1==1){
                 for (const i of info[0]["grupos"]){
@@ -398,29 +398,177 @@ while (bool==true){
                         for (const z of i["grupo"]){
                             cont+=1
                             console.log(" ")
-                            console.log("==================== CAMPER # ",cont,"==============================")
-                            console.log("id: ",z["id"])
-                            console.log("nombre: ", z["nombre"])
-                            console.log("apellido: ", z["apellido"])
-                            console.log("edad: ", z["edad"])
-                            console.log("direccion: ", z["direccion"])
-                            console.log("acudiente: ", z["acudiente"])
-                            console.log("telefono: ", z["telefono"])
-                            console.log("estado: ", z["estado"])
-                            console.log("riesgo: ", z["riesgo"])
-                            console.log("=========================================================")
-                            console.log("")
+                            console.log("==================== CAMPER # ",cont,"==============================");
+                            console.log("id: ",z["id"]);
+                            console.log("nombre: ", z["nombre"]);
+                            console.log("apellido: ", z["apellido"]);
+                            console.log("edad: ", z["edad"]);
+                            console.log("direccion: ", z["direccion"]);
+                            console.log("acudiente: ", z["acudiente"]);
+                            console.log("telefono: ", z["telefono"]);
+                            console.log("estado: ", z["estado"]);
+                            console.log("riesgo: ", z["riesgo"]);
+                            console.log("=========================================================");
+                            console.log("");
                         }
                     }
                 }
-                menucoordinador()//al finalizar lo anterior nos volvera a imprimir el menu de coordinador
             }
             else if (opc1==2){
-                bucle=true
+                bucle=true;
                 while (bucle==true){
                     console.log("");
                     console.log(":::::::::AÑADIR NUEVO CAMPER:::::::::");
-                    
+                    let old = true;
+                    while (old==true){
+                        let contador = 0;
+                        var id = prompt("ingrese la id: ");//le pide al cooordinador ingresar una id 
+                        for (const i of info[0]["grupos"]){//con un for nos posicionamos en grupos
+                            for (const z of i["grupo"]){//con el siguiente for en la opcion grupo que guarda a los campers
+                                if (z["id"]==id){//si la anterior id ingresada ya se encuentra le imprimira lo siguiente
+                                    console.log("este id ya existe, prueba con otro");
+                                    contador = 1//si el contador anterior pasa a 1 le imprimira esto y le dara la opcion de ingresar nuevamente
+                                }
+                            }
+                        }
+                        if (contador==0){
+                            old=false;
+                        }
+                    }
+                    //le pedira al coordinador todo los datos requeridoa para la agregación de un nuevo camper
+                    let nombre = prompt("ingrese el nombre: ");
+                    let apellido = prompt("ingrese el apellido: ");
+                    let edad = prompt("ingrese la edad: ");
+                    let direccion = prompt("ingrese la direccion: ");
+                    let acudiente = prompt("ingrese el nombre del acudiente:  ");
+                    let celular=prompt("ingrese el numero:  ");
+                    let fijo = prompt("ingrese numero fijo:  ");
+                    info[0]["ingreso"].push({"id":id,"nombre":nombre,"apellido":apellido,"edad":edad, "direccion":direccion, "acudiente":acudiente, "telefono": {"celular":celular, "fijo":fijo},"estado":"progreso de ingreso", "riesgo":"", "modulos":{}});
+                    console.log("se ha creado con exito!!");
+                    let si = prompt("quieres agregar otro camper(si)\n"+
+                                    "presiona enter para volver al menú\n");
+                    if (si!="si"){
+                        bucle=false
+                    }
+                }
+            }
+            else if (opc1==3){
+                way=true;
+                while (way==true){
+                    console.log("estos son los estudiantes que estan en estado de ingreso");
+                    for (const i of info[0]["ingreso"]){
+                        if (i["estado"]=="progreso de ingreso"){
+                            console.log("=========================================================");
+                            console.log("id:  ",i["id"]);
+                            console.log("nombre:  ",i["nombre"]);
+                            console.log("apellido:  ",i["apellido"]);
+                            console.log("estado:  ",i["estado"]);
+                            console.log("=========================================================");
+                            console.log("");
+                        }
+                    }
+                    hola=true;
+                    while (hola==true) {
+                        let co = 0;
+                        let pedir = prompt("ingresa el id del estudiante al que le quieres asignar notas")
+                        for (const i of info[0]["ingreso"]){
+                            if (pedir==i["id"]){
+                                co=1
+                                hola=false
+                            }
+                        }
+                        if (co==0){
+                            console.log("ingresa un id de los que se muestran");
+                            
+                        }
+                    }
+                    for (const i of info[0]["ingreso"]){
+                        if (i["id"]==pedir){
+                            var archivo=i;
+                            console.log("ingresa las notas");
+                            let booleanito=true;
+                            while (booleanito==true){
+                                var nota1 = prompt("nota de la prueba teorica:  ")
+                                if (nota1>=0 && nota1<=100){
+                                    booleanito=false;
+                                }
+                                else {
+                                    console.log("ingresa una nota entre 0 y 100");
+                                }
+                            }
+                            let booleanito2=true;
+                            while (booleanito2==false) {
+                                var nota2=prompt("nota de la prueba practica:  ")
+                                if (nota2>=0 && nota2<=100){
+                                    booleanito2=false;
+                                }
+                                else {
+                                    console.log("ingresa una nota entre 0 y 100");
+                                }
+                            }
+                            nota1*=0.4
+                            nota2*=0.6
+                            var resul=nota1+nota2
+                            console.log(resul);
+                            if (resul>=60){
+                                console.log("esta persona aprobó");
+                                i["estado"]="cursando";
+                                console.log("estas son las rutas que estan disponibles");
+                                let grups=[]
+                                for (const i of info[0]["grupos"]){
+                                    if (i["grupo"].length>33){
+                                        console.log("--------");
+                                        console.log(i["nombres"]);
+                                        console.log(i["ruta"]);
+                                        grups.push(i["nombres"])
+                                    }
+                                }
+                                let soccer=true
+                                while (soccer==true){
+                                    let pregunta2=prompt("ingresa el nombre del grupo que tiene la ruta que deseas:")
+                                    if (pregunta2 in grups){
+                                        soccer=false
+                                    }
+                                    else{
+                                        console.log("este grupo no existe (o escribe bien el nombre)");
+                                    }
+                                }
+                                for (const i of info[0]["grupos"]){
+                                    if (pregunta2==i["nombres"]){
+                                        i["grupo"].push(archivo)
+                                    }
+                                }
+                                console.log("se han aplicado los cambios");
+                            }
+                        }
+                        if (resul<60) {
+                            console.log("esta persona no aprobó");
+                        }
+                        var sol = prompt("quieres hacer otro cambio (si)\n"+
+                                         "o presiona enter para volver al menú")
+                        if (sol!="si") {
+                            way=false
+                        }
+                    }
+                    for (const i=info["0"]["ingreso"].length; i >= 0; i--){
+                        if (info[0]["ingreso"][i]["estado"]=="cursando"){
+                            info[0]["ingreso"][i]["estado"].pop(i)
+                        }
+                    }
+                }
+            }
+            else if (opc1==4){
+                console.log("");
+                console.log(":::::::::: CREAR RUTAS ACADEMICAS CON LOS MODULOS ::::::::::::::");
+                let yo=true;
+                while (yo==true){
+                    let rutas=[];
+                    let xd = 0;
+                    for (const i of info[0]["grupos"]){
+                        for (const z of i["ruta"].length){
+                            
+                        }
+                    }
                 }
             }
             else if (opc1==9){
