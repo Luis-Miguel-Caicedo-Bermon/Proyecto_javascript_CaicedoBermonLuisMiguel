@@ -738,6 +738,146 @@ while (bool==true){
                     }
                 }
             }
+            else if (opc1==5){
+                let ole=true;
+                while (ole==true) {
+                    for (const i of info[0]["trainers"]){
+                        if (i["ruta"].length<4) {
+                            console.log("");
+                            console.log("--------------------------------");
+                            console.log("id:  ", i["id"]);
+                            console.log("nombre: ", i["nombre"]);
+                            console.log("apellido", i["apellido"]);
+                            console.log("--------------------------------");
+                            console.log("");
+                        }
+                    }
+                    let miau=True;
+                    while (miau==True){
+                        var conta=0;
+                        var seleccion=prompt("ingresa el id del trainer al que le quieres asignar una ruta")//le pide la id del trainer a ingresarle la ruta
+                        for (const i of info[0]["trainers"]){
+                            if (i["ruta"].length<4 && seleccion==i["id"]) {
+                                conta = 1;
+                                miau=false
+                            }
+                        }
+                        if (conta==0) {
+                            console.log("ingresa un id de los que muestran");
+                        }
+                    }
+                    if (conta==1) {
+                        var listarutas=[];
+                        for (const i of info[0]["grupos"]){
+                            let rutacont=0;
+                            for (const z of info[0]["trainers"]){
+                                for (const x of i["ruta"]){
+                                    if (z["ruta"][x]==i["ruta"]) {
+                                        rutacont=1;
+                                    }
+                                }
+                            }
+                            if (rutacont==0){
+                                console.log("ruta: ", i["ruta"]);
+                                listarutas.push(i["ruta"])
+                            }
+                        }
+                        if (listarutas.length>0) {
+                            for (const i of info[0]["trainers"]){
+                                if (i["id"]==seleccion) {
+                                    let piece=true;
+                                    while (piece==true) {
+                                        let son = 0;
+                                        var qwerty=prompt("escoje una ruta:  ")//le permitira escojer la ruta a añadirle
+                                        for (const a of listarutas){
+                                            if (a==qwerty) {
+                                                son=1;
+                                                piece=false;
+                                            }
+                                        }
+                                        if (son==0) {
+                                            console.log("esta ruta no esta disponible");
+                                            console.log("ingresa una ruta de las que se mostraron");
+                                            
+                                        }
+                                    }
+                                    for (let b=listarutas.length; b>=0; b--){
+                                        listarutas.splice(b,1)
+                                    }
+                                    i["ruta"].push(qwerty);
+                                    console.log("ruta agregada con exito");
+                                    let pregun=prompt("quieres hacer otro cambio (si)\n"+
+                                                    "si no quieres preciona enter");
+                                    if (pregun!="si") {
+                                        ole=false;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else if (opc1==6) {
+                for (const i of info[0]["grupos"]){
+                    console.log("-------------------------------");
+                    console.log("ruta: ", z["ruta"]);
+                    console.log("MODULOS");
+                    console.log("fundamentos de programacion: ", z["modulos"]["fundamentos de programacion"]);
+                    console.log("programacion web: ", z["modulos"]["programacion web"]);
+                    console.log("programacion formal: ", z["modulos"]["programacion formal"]);
+                    console.log("bases de datos: ", z["modulos"]["bases de datos"]);
+                    console.log("backend: ", z["modulos"]["backend"]);
+                    console.log("grupo: ", z["nombres"]);
+                    console.log("-------------------------------");
+                    console.log("");
+                }
+                let opc7=true;
+                while (opc7==true){
+                    contador=0
+                    let modificar=input("ingresa el nombre del grupo donde vas a asignar notas");//le pedira al cordinador ingresar el grupo  en donde asignara notas
+                    for (const i of info[0]["grupos"]){
+                        if (i["nombres"]==modificar && i["grupo"].length>0){
+                            for (const x of i["grupo"]){
+                                console.log("");
+                                console.log("--------------------------------");
+                                console.log("id:  ", x["id"]);
+                                console.log("mombre:  ", x["nombre"]);
+                                console.log("apellido:  ", x["apellido"]);
+                                console.log("--------------------------------");
+                                console.log("");
+                            }
+                            let idmod=prompt("ingresa el id del estudiante al que le quieres asignar notas de algun modulo");// le pedira la id del camper a asignar notas
+                            for (const x of i["grupo"]){
+                                if (idmod==x["id"]) {//y si la id es igual a la agregada 
+                                    notasmodulos();//imprimira el menu de modulos
+                                    let men=true;
+                                    while (men==true){
+                                        var escojer=prompt("escoje de que modulo le asignaras las notas: ");//le pide al coordinador escribir su opción
+                                        if (escojer>=1 && escojer<=5) {
+                                            let duki=true;
+                                            while (duki==true){
+                                                var teorica=prompt("nota de la prueba teorica: ")
+                                                if (teorica>=0 && teorica<=100) {
+                                                    duki=false;
+                                                }
+                                                else{
+                                                    console.log("la nota deveria ser entre 0 y 100");
+                                                    
+                                                }
+                                            }
+                                            teorica=teorica*0.3;//multiplicara la nota por el porcentaje ya dividido en 100
+                                            duki=true;
+                                            while (duki==true) {
+                                                var practica=prompt("nota de la prueba practica: ")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             else if (opc1==9){
                 ver = false
             }
