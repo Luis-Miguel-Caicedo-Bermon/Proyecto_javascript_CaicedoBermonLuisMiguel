@@ -550,9 +550,9 @@ while (bool==true){
                             way=false
                         }
                     }
-                    for (const i=info[0]["ingreso"].length; i >= 0; i--){
+                    for (let i=info[0]["ingreso"].length-1; i >= 0; i--){
                         if (info[0]["ingreso"][i]["estado"]=="cursando"){
-                            info[0]["ingreso"].pop(i)
+                            info[0]["ingreso"].splice(i,1)
                         }
                     }
                 }
@@ -681,21 +681,21 @@ while (bool==true){
                         for (const i of info[0]["grupos"]){
                             listasalones.push(i["salon de entrenamiento"]);
                         }
-                        var salon1 = 0;
-                        var salon2 = 0;
-                        var salon3 = 0;
-                        for (let i=0; i=listasalones.length; i++){
-                            if (listasalones[i]=="aula1") {
+                        var salon1=0;
+                        var salon2=0;
+                        var salon3=0;
+                        for (let m=0; m<listasalones.length; m++){
+                            if (listasalones[m]=="aula1") {
                                 salon1+=1
                             }
-                            else if (listasalones[i]=="aula2") {
+                            else if (listasalones[m]=="aula2") {
                                 salon2+=1
                             }
-                            else if (listasalones[i]=="aula3") {
+                            else if (listasalones[m]=="aula3") {
                                 salon3+=1
                             }
                         }
-                        var listaaula
+                        var listaaula=[];
                         if (salon1<4){
                             console.log("aula1");
                             listaaula.push("aula1")
@@ -710,7 +710,7 @@ while (bool==true){
                         }
                         let yuju = true;
                         while (yuju==true) {
-                            let escoje = prompt("escoje un salon de entranamiento de los que acabo de mostrar")
+                            var escoje = prompt("escoje un salon de entranamiento de los que acabo de mostrar")
                             if (listaaula.includes(escoje)){
                                 yuju=false
                             }
@@ -721,12 +721,12 @@ while (bool==true){
                         var fechaI=prompt("ingresa la fecha de INICIO DD-MM-AA")
                         var fechaF=prompt("ingresa la fecha de FINALIZACIÓN DD-MM-AA")
                         var nuevonombre=prompt("ingresa el nombre del nuevo grupo")
-                        miArchivo[0]["grupos"].push({"ruta":ruta, "modulos":{"fundamentos de programacion": ["introduccion a la algoritmia", "PSeint", "Python"],
+                        info[0]["grupos"].push({"ruta":ruta, "modulos":{"fundamentos de programacion": ["introduccion a la algoritmia", "PSeint", "Python"],
                                                                              "programacion web": ["HTML", "CSS", "booststrap"],
                                                                              "programacion formal":num1,
                                                                              "bases de datos":[num2,num3],
                                                                              "backend":[num4,num5]}, "nombres":nuevonombre,"fecha de inicio":fechaI,"fecha de finalizacion":fechaF,"salon de entrenamiento":escoje, "grupo":[]})//agregara todo esos datos guardandolos en el json y asi mismo finalizando la creacion de la nueva ruta de entrenamiento.
-                        cambio=input("SE HA CREADO LA RUTA CON EXITO\n"+//le preguntara al coordinador si desea crear un anueva ruta
+                        var cambio=prompt("SE HA CREADO LA RUTA CON EXITO\n"+//le preguntara al coordinador si desea crear un anueva ruta
                                     "crear otra ruta: (si)\n"+
                                     "volver al menu: preciona enter\n")
                         if (cambio!="si"){//si la respuesta es difernete de si, se rompera el bucle y volvera al menu de coordinado
